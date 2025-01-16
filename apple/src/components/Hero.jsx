@@ -1,21 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import {useGSAP} from '@gsap/react';
+import gsap from 'gsap';
+import {heroVideo, smallHeroVideo} from "../utils";
 
 const Hero = () => {
-    
+
+    const [videoSrc , setVideoSrc] = useState( window.innerWidth < 760 ? smallHeroVideo : heroVideo);
+
+    const handleVideoSrc =() =>{
+
+        if(window.innerWidth <760){
+            setVideoSrc(smallHeroVideo)
+        }
+        else{
+            setVideoSrc(heroVideo)
+        }
+    }
+
+
+    useEffect( () =>{
+        window.addEventListener( 'resize', handleVideoSrc );
+
+        return () =>{
+            window.removeEventListener('resize', handleVideoSrc);
+        }
+
+    },[] );
+
+    useGSAP( () =>{
+        gsap.to( '#t1' ,{opacity:1 , delay:2})
+        gsap.to( '#t2' ,{opacity:1 , y : -50 , delay:2})
+               
+    },[] )
   return (
-    <section>
-        <div>
-            <p>Android is better Than iOS</p>
-            <div>
-                <video>
-                    <source/>
+    <section className=' w-full nav-height  bg-black relative'>
+        <div className=' h-5/6 w-full flex-center flex-col'>
+            <p id='t1' className='hero-title'>Android is better Than iOS</p>
+            <div className='md:w-10/12 w-9/12'>
+                <video className=' pointer-events-none'
+                autoPlay muted playsInline={true} key={videoSrc}
+                >
+                    <source src= {videoSrc} type="video/mp4"/>
                 </video>
             </div>
         </div>
 
-        <div>
-            <a>Buy</a>
-            <p> Never Sell your Kidneys</p>
+        <div id='t2'  className= " opacity-0 flex  flex-col items-center translate-y-20">
+            <a href='#highlights' className='btn' >Buy</a>
+            <p className='font-normal text-xl'> Never Sell your Kidneys</p>
         </div>
 
     </section>
