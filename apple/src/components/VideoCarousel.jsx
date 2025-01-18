@@ -1,10 +1,11 @@
  import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 import { useEffect, useRef, useState } from "react";
 import {pauseImg, playImg, replayImg} from "../utils"
-import { ScrollTrigger } from "gsap/all";
-import gsap from "gsap";
-gsap.registerPlugin(ScrollTrigger);
-
 
 import {hightlightsSlides} from "../constants"
  const VideoCarousel = () => {
@@ -26,7 +27,7 @@ import {hightlightsSlides} from "../constants"
            useGSAP ( () =>{
 
             gsap.to( "#slider",{
-              transform: `translateX(${-100 * videoId} %)`, /// get infos more on this
+              transform: `translateX(${-100 * videoId}%)`, /// get infos more on this
               duration: 2,
               ease:"power2.inOut"
             })
@@ -134,7 +135,7 @@ import {hightlightsSlides} from "../constants"
               break;
 
               case "video-last" :
-                setVideo ( (prev) =>({...prev, isLastVideo:rue })
+                setVideo ( (prev) =>({...prev, isLastVideo:true })
               )
               break;
 
